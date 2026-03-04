@@ -488,7 +488,7 @@ if (-not $Target) {
     $Target = Read-Host '  Target(s)'
 }
 
-$targets = Get-ValidatedTargets -InputString $Target
+$targets = @(Get-ValidatedTargets -InputString $Target)
 if ($targets.Count -eq 0) {
     Write-Host '  No valid targets provided. Exiting.' -ForegroundColor Red
     exit 1
@@ -518,6 +518,7 @@ switch -Regex ($choice) {
         ) | Sort-Object Category, Port
 
         Write-Host "  Mode: All Ports -- $($entriesToCheck.Count) unique checks" -ForegroundColor Cyan
+        break
     }
 
     '^\d+$' {
@@ -530,6 +531,7 @@ switch -Regex ($choice) {
         $entriesToCheck   = @($PortDatabase | Where-Object { $_.Category -eq $selectedCategory })
 
         Write-Host "  Mode: $selectedCategory -- $($entriesToCheck.Count) checks" -ForegroundColor Cyan
+        break
     }
 
     '^[qQ]$' {
