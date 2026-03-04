@@ -331,12 +331,12 @@ function Show-Summary {
         [Parameter(Mandatory)][PSCustomObject[]]$Results,
         [Parameter(Mandatory)][string]           $HostName
     )
-    $total    = $Results.Count
-    $open     = ($Results | Where-Object { $_.Status -eq 'Open' }).Count
-    $closed   = ($Results | Where-Object { $_.Status -in @('Closed', 'Refused') }).Count
-    $timeout  = ($Results | Where-Object { $_.Status -eq 'Timeout' }).Count
-    $filtered = ($Results | Where-Object { $_.Status -like 'Open*' -and $_.Status -ne 'Open' }).Count
-    $errors   = ($Results | Where-Object { $_.Status -like 'Error*' -or $_.Status -eq 'DNS Error' }).Count
+    $total    = @($Results).Count
+    $open     = @($Results | Where-Object { $_.Status -eq 'Open' }).Count
+    $closed   = @($Results | Where-Object { $_.Status -in @('Closed', 'Refused') }).Count
+    $timeout  = @($Results | Where-Object { $_.Status -eq 'Timeout' }).Count
+    $filtered = @($Results | Where-Object { $_.Status -like 'Open*' -and $_.Status -ne 'Open' }).Count
+    $errors   = @($Results | Where-Object { $_.Status -like 'Error*' -or $_.Status -eq 'DNS Error' }).Count
 
     $line = '  ' + ('=' * 50)
     Write-Host ''
